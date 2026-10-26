@@ -2,6 +2,8 @@
 
 A static-first web dashboard that fuses **geospatial multi-criteria siting analysis for 240 kW DC fast-charging stations** with **carbon-aware software telemetry** (Green Software Foundation SCI). Built for the Odisha (India) highway corridors, 2026.
 
+**🔴 Live demo: https://dashdibyajit1-png.github.io/ecogrid-geo-carbon-analyzer/**
+
 **No backend, no build step, no framework.** All scoring runs client-side over pre-computed, Douglas-Peucker-simplified GeoJSON — in line with Sustainable Software Engineering (HPI / AWS Sustainability Pillar / Green Software Foundation).
 
 ## ✨ Features
