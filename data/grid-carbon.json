@@ -1,0 +1,32 @@
+{
+  "region": "Eastern Region (Odisha pool)",
+  "source": "Representative diurnal profile synthesized from published grid-operator daily load curves and thermal-heavy generation mix; use live API (e.g. ElectricityMaps / VNPt) in production.",
+  "units": "gCO2e per kWh",
+  "note": "Hourly carbon intensity used for time-shifted scheduling. Low-carbon windows late-night (high thermal baseload share with low demand) and midday (solar).",
+  "hours": [
+    { "hour": 0,  "gco2PerKwh": 682 },
+    { "hour": 1,  "gco2PerKwh": 668 },
+    { "hour": 2,  "gco2PerKwh": 655 },
+    { "hour": 3,  "gco2PerKwh": 648 },
+    { "hour": 4,  "gco2PerKwh": 651 },
+    { "hour": 5,  "gco2PerKwh": 663 },
+    { "hour": 6,  "gco2PerKwh": 680 },
+    { "hour": 7,  "gco2PerKwh": 701 },
+    { "hour": 8,  "gco2PerKwh": 715 },
+    { "hour": 9,  "gco2PerKwh": 702 },
+    { "hour": 10, "gco2PerKwh": 681 },
+    { "hour": 11, "gco2PerKwh": 655 },
+    { "hour": 12, "gco2PerKwh": 630 },
+    { "hour": 13, "gco2PerKwh": 618 },
+    { "hour": 14, "gco2PerKwh": 621 },
+    { "hour": 15, "gco2PerKwh": 642 },
+    { "hour": 16, "gco2PerKwh": 668 },
+    { "hour": 17, "gco2PerKwh": 699 },
+    { "hour": 18, "gco2PerKwh": 728 },
+    { "hour": 19, "gco2PerKwh": 742 },
+    { "hour": 20, "gco2PerKwh": 735 },
+    { "hour": 21, "gco2PerKwh": 719 },
+    { "hour": 22, "gco2PerKwh": 706 },
+    { "hour": 23, "gco2PerKwh": 692 }
+  ]
+}

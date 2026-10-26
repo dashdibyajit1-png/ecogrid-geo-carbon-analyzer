@@ -1,0 +1,32 @@
+{
+  "asset": "EG-01 · Khandagiri Corridor Hub",
+  "period": "typical day, pre-monsoon season",
+  "note": "Synthetic telemetry produced by the simulated OCPP 2.0.1 feed (scripts/simulate_telemetry.py) for demonstrating the polling-cache-compression pipeline and SCI computation.",
+  "sampleCountPerHour": 120,
+  "hours": [
+    { "hour": 0,  "sessions": 0, "avgKw": 0,   "gridKwh": 0,    "solarKwh": 0 },
+    { "hour": 1,  "sessions": 0, "avgKw": 0,   "gridKwh": 0,    "solarKwh": 0 },
+    { "hour": 2,  "sessions": 0, "avgKw": 0,   "gridKwh": 0,    "solarKwh": 0 },
+    { "hour": 3,  "sessions": 0, "avgKw": 0,   "gridKwh": 0,    "solarKwh": 0 },
+    { "hour": 4,  "sessions": 0, "avgKw": 0,   "gridKwh": 0,    "solarKwh": 0 },
+    { "hour": 5,  "sessions": 1, "avgKw": 62,  "gridKwh": 58,   "solarKwh": 2 },
+    { "hour": 6,  "sessions": 2, "avgKw": 118, "gridKwh": 208,  "solarKwh": 11 },
+    { "hour": 7,  "sessions": 3, "avgKw": 186, "gridKwh": 512,  "solarKwh": 18 },
+    { "hour": 8,  "sessions": 4, "avgKw": 232, "gridKwh": 836,  "solarKwh": 37 },
+    { "hour": 9,  "sessions": 3, "avgKw": 204, "gridKwh": 552,  "solarKwh": 64 },
+    { "hour": 10, "sessions": 4, "avgKw": 241, "gridKwh": 712,  "solarKwh": 102 },
+    { "hour": 11, "sessions": 3, "avgKw": 198, "gridKwh": 464,  "solarKwh": 132 },
+    { "hour": 12, "sessions": 4, "avgKw": 226, "gridKwh": 560,  "solarKwh": 165 },
+    { "hour": 13, "sessions": 3, "avgKw": 188, "gridKwh": 388,  "solarKwh": 190 },
+    { "hour": 14, "sessions": 4, "avgKw": 235, "gridKwh": 540,  "solarKwh": 201 },
+    { "hour": 15, "sessions": 4, "avgKw": 244, "gridKwh": 624,  "solarKwh": 181 },
+    { "hour": 16, "sessions": 5, "avgKw": 252, "gridKwh": 880,  "solarKwh": 154 },
+    { "hour": 17, "sessions": 5, "avgKw": 261, "gridKwh": 1064, "solarKwh": 114 },
+    { "hour": 18, "sessions": 4, "avgKw": 238, "gridKwh": 896,  "solarKwh": 76 },
+    { "hour": 19, "sessions": 4, "avgKw": 247, "gridKwh": 944,  "solarKwh": 38 },
+    { "hour": 20, "sessions": 3, "avgKw": 214, "gridKwh": 640,  "solarKwh": 10 },
+    { "hour": 21, "sessions": 2, "avgKw": 152, "gridKwh": 300,  "solarKwh": 0 },
+    { "hour": 22, "sessions": 2, "avgKw": 124, "gridKwh": 244,  "solarKwh": 0 },
+    { "hour": 23, "sessions": 1, "avgKw": 88,  "gridKwh": 84,   "solarKwh": 0 }
+  ]
+}

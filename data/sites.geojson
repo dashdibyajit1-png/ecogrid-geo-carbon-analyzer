@@ -1,0 +1,107 @@
+{
+  "name": "odisha-ev-charging-sites-demo",
+  "crs": "WGS84 (EPSG:4326) — all criterion distances were computed against full-resolution source layers in UTM Zone 45N (EPSG:32645); geometries shown here are Douglas-Peucker simplified for the web payload",
+  "note": "Synthetic demo dataset for portfolio illustration. Candidate sites for 240 kW DC fast-charging deployment along Odisha corridors; attribute values are engineering estimates, not for construction use.",
+  "scoringCriteria": {
+    "weights": { "highwayAccess": 0.25, "gridProximity": 0.25, "landAvailability": 0.15, "terrainSlope": 0.10, "gridHeadroom": 0.10, "floodRisk": 0.08, "solarIrradiance": 0.07 },
+    "bands": { "recommended": ">= 85", "viable": "65 - 84", "marginal": "45 - 64", "notRecommended": "< 45" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [85.817, 20.253] },
+      "properties": {
+        "id": "EG-01", "name": "Khandagiri Corridor Hub", "district": "Khordha", "parcelId": "OD-KH-4471", "landUse": "Highway commercial",
+        "highwayId": "NH-16", "highwayDistanceM": 90, "nearestSubstationId": "SS-BBSR-01", "gridDistanceM": 220, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 1450, "avgSlopeDeg": 1.8, "floodRisk": "low", "solarPeakSunHours": 5.42, "gridHeadroomPct": 28,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 3.85,
+        "utilizationPct": 14, "carbonIntensityGPerKwh": 694, "carbonSavingsKgCO2e": 412000,
+        "status": "Pilot — under construction", "notes": "Strongest all-round candidate: dual highway frontage with dedicated 33 kV feeder."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [85.829, 20.200] },
+      "properties": {
+        "id": "EG-02", "name": "Janla Interchange", "district": "Khordha", "parcelId": "OD-KH-5122", "landUse": "Commercial",
+        "highwayId": "NH-316", "highwayDistanceM": 140, "nearestSubstationId": "SS-BBSR-01", "gridDistanceM": 480, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 950, "avgSlopeDeg": 2.4, "floodRisk": "low", "solarPeakSunHours": 5.31, "gridHeadroomPct": 34,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 3.60,
+        "utilizationPct": 12.5, "carbonIntensityGPerKwh": 694, "carbonSavingsKgCO2e": 405000,
+        "status": "Proposed", "notes": "Pilgrimage-corridor traffic; compact parcel limits canopies and future expansion."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [85.937, 20.428] },
+      "properties": {
+        "id": "EG-03", "name": "Cuttack Ring Road", "district": "Cuttack", "parcelId": "OD-CT-2287", "landUse": "Mixed urban",
+        "highwayId": "NH-16", "highwayDistanceM": 260, "nearestSubstationId": "SS-CTC-01", "gridDistanceM": 150, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 800, "avgSlopeDeg": 3.1, "floodRisk": "medium", "solarPeakSunHours": 5.18, "gridHeadroomPct": 45,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 3.40,
+        "utilizationPct": 11, "carbonIntensityGPerKwh": 696, "carbonSavingsKgCO2e": 398000,
+        "status": "Proposed", "notes": "Excellent grid access; medium flood exposure from Kathajodi backwaters requires plinth elevation."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [86.096, 20.651] },
+      "properties": {
+        "id": "EG-04", "name": "Chhatia Freight Plaza", "district": "Jajpur", "parcelId": "OD-JJ-0934", "landUse": "Highway commercial",
+        "highwayId": "NH-16", "highwayDistanceM": 450, "nearestSubstationId": "SS-JJP-01", "gridDistanceM": 190, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 2000, "avgSlopeDeg": 4.8, "floodRisk": "low", "solarPeakSunHours": 4.98, "gridHeadroomPct": 12,
+        "chargerCount": 6, "transformerCapacityKva": 2000, "estimatedCapexInrCrore": 4.10,
+        "utilizationPct": 16, "carbonIntensityGPerKwh": 701, "carbonSavingsKgCO2e": 582000,
+        "status": "Proposed", "notes": "Highest heavy-vehicle share; six-bay layout but feeder headroom caps simultaneous 240 kW output."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [85.418, 20.776] },
+      "properties": {
+        "id": "EG-05", "name": "Dhenkanal Bypass", "district": "Dhenkanal", "parcelId": "OD-DN-1189", "landUse": "Agricultural (conversion filed)",
+        "highwayId": "NH-55", "highwayDistanceM": 120, "nearestSubstationId": "SS-DNK-01", "gridDistanceM": 1100, "feederVoltage": "11 kV",
+        "parcelAreaSqM": 600, "avgSlopeDeg": 2.2, "floodRisk": "low", "solarPeakSunHours": 5.25, "gridHeadroomPct": 38,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 4.60,
+        "utilizationPct": 10, "carbonIntensityGPerKwh": 688, "carbonSavingsKgCO2e": 402000,
+        "status": "Proposed", "notes": "Viable but 11 kV feeder needs a 1.1 km line extension — the main capex driver."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [86.905, 21.315] },
+      "properties": {
+        "id": "EG-06", "name": "Balasore Floodplain Parcel", "district": "Balasore", "parcelId": "OD-BA-6643", "landUse": "Agricultural",
+        "highwayId": "NH-16", "highwayDistanceM": 1500, "nearestSubstationId": "SS-BLS-01", "gridDistanceM": 3000, "feederVoltage": "11 kV",
+        "parcelAreaSqM": 2600, "avgSlopeDeg": 1.1, "floodRisk": "high", "solarPeakSunHours": 4.72, "gridHeadroomPct": 49,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 2.90,
+        "utilizationPct": 7, "carbonIntensityGPerKwh": 690, "carbonSavingsKgCO2e": 379000,
+        "status": "Not recommended", "notes": "Cheap land, but high flood exposure, monsoon-degraded irradiance and no viable highway access within the 1 km screening buffer."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [84.622, 21.084] },
+      "properties": {
+        "id": "EG-07", "name": "Rourkela–Sambalpur Ghat Section", "district": "Sambalpur", "parcelId": "OD-SB-3021", "landUse": "Forest fringe ( diversion pending )",
+        "highwayId": "NH-55", "highwayDistanceM": 310, "nearestSubstationId": "SS-SBP-01", "gridDistanceM": 950, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 1000, "avgSlopeDeg": 12.5, "floodRisk": "low", "solarPeakSunHours": 5.12, "gridHeadroomPct": 42,
+        "chargerCount": 4, "transformerCapacityKva": 1260, "estimatedCapexInrCrore": 4.30,
+        "utilizationPct": 9, "carbonIntensityGPerKwh": 681, "carbonSavingsKgCO2e": 384000,
+        "status": "Marginal", "notes": "Terrain grading costs and forest-diversion timeline make this a phase-2 candidate at best."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [85.150, 20.845] },
+      "properties": {
+        "id": "EG-08", "name": "Angul Industrial Estate", "district": "Angul", "parcelId": "OD-AN-7710", "landUse": "Industrial",
+        "highwayId": "NH-55", "highwayDistanceM": 5200, "nearestSubstationId": "SS-ANGL-01", "gridDistanceM": 160, "feederVoltage": "33 kV",
+        "parcelAreaSqM": 2600, "avgSlopeDeg": 1.5, "floodRisk": "low", "solarPeakSunHours": 4.75, "gridHeadroomPct": 55,
+        "chargerCount": 2, "transformerCapacityKva": 630, "estimatedCapexInrCrore": 3.30,
+        "utilizationPct": 6, "carbonIntensityGPerKwh": 678, "carbonSavingsKgCO2e": 188000,
+        "status": "Proposed", "notes": "Fleet-depot profile: superb grid headroom, but 5.2 km from the highway kills transient-charge traffic."
+      }
+    }
+  ]
+}

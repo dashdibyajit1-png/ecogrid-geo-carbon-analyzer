@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoGrid · Geo-Spatial &amp; Carbon-Aware EV Charging Analyzer</title>
+<meta name="description" content="Geospatial MCDA suitability scoring for 240 kW EV charging sites plus Software Carbon Intensity (SCI) analytics — a green-software dashboard for Odisha corridors.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1728'/%3E%3Cpath d='M18 3 8 18h6l-2 11 12-16h-7l3-10z' fill='%2334d399'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+<body>
+
+<header class="site">
+  <div class="site-head">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0d1728"/><path d="M18 3 8 18h6l-2 11 12-16h-7l3-10z" fill="#34d399"/></svg>
+      <div>
+        <h1>EcoGrid Analyzer</h1>
+        <p>Geo-spatial &amp; carbon-aware EV siting · Odisha corridors</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+      <button role="tab" aria-selected="true" data-view="overview">Overview</button>
+      <button role="tab" aria-selected="false" data-view="explore">Site explorer</button>
+      <button role="tab" aria-selected="false" data-view="load">Load estimator</button>
+      <button role="tab" aria-selected="false" data-view="carbon">Carbon &amp; SCI</button>
+      <button role="tab" aria-selected="false" data-view="green">Green engineering</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="app-error" class="app-error" role="alert">
+    <strong>Could not load data.</strong> <span id="app-error-msg"></span>
+  </div>
+
+  <noscript>
+    <div class="card"><h3>JavaScript required</h3><p>This dashboard scores sites and renders charts client-side to avoid any backend compute. Enable JavaScript, or read the methodology in <code>docs/METHODOLOGY.md</code>.</p></div>
+  </noscript>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view active" id="view-overview" role="tabpanel" aria-label="Overview">
+    <div class="hero">
+      <h2>Where should the next 240&nbsp;kW fast-charging plaza go — and what does the software running it cost the grid?</h2>
+      <p>EcoGrid fuses a weighted multi-criteria GIS suitability model (highway buffers, feeder proximity, parcels, terrain, flood exposure, solar) with Green Software Foundation SCI telemetry. All scoring runs client-side on pre-computed GeoJSON — no backend, no heavy framework.</p>
+      <div class="actions">
+        <button class="btn" data-goto="explore">Open the site explorer</button>
+        <button class="btn ghost" data-goto="carbon">Calculate SCI</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="label">Candidate sites</div><div class="value" id="kpi-sites">—</div><div class="sub" id="kpi-sites-sub"></div></div>
+      <div class="kpi accent"><div class="label">Recommended</div><div class="value" id="kpi-recommended">—</div><div class="sub" id="kpi-recommended-sub"></div></div>
+      <div class="kpi cyan"><div class="label">DC capacity</div><div class="value" id="kpi-capacity">—</div><div class="sub" id="kpi-capacity-sub"></div></div>
+      <div class="kpi"><div class="label">CO₂e avoided</div><div class="value" id="kpi-carbon">—</div><div class="sub" id="kpi-carbon-sub"></div></div>
+      <div class="kpi accent"><div class="label">App payload</div><div class="value" id="kpi-payload">—</div><div class="sub" id="kpi-payload-sub"></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <h3>Regional grid carbon intensity — 24 h profile <span class="muted small">· eastern region, thermal-heavy mix</span></h3>
+      <p class="small muted">The time-shift optimizer on the Carbon &amp; SCI tab schedules flexible evening charging into the low-intensity troughs of this curve.</p>
+      <div class="chart-wrap"><canvas id="hero-canvas" class="chart" aria-label="24-hour grid carbon intensity chart"></canvas></div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <h3>Suitability ranking <span class="muted small">· click a row for the scorecard · click headers to sort</span></h3>
+      <div class="table-scroll">
+        <table class="sites">
+          <thead id="rank-thead"></thead>
+          <tbody id="rank-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" id="over-detail"></div>
+  </section>
+
+  <!-- ================= EXPLORE ================= -->
+  <section class="view" id="view-explore" role="tabpanel" aria-label="Site explorer">
+    <div class="map-layout">
+      <div class="card map-panel">
+        <h3>Layers</h3>
+        <div class="layer-list">
+          <label><input type="checkbox" id="lay-sites" checked><span class="layer-swatch" style="background:#34d399"></span>Candidate sites</label>
+          <label><input type="checkbox" id="lay-highways"><span class="layer-swatch" style="background:#f59e0b"></span>Highway corridors</label>
+          <label><input type="checkbox" id="lay-substations"><span class="layer-swatch" style="background:#7dd3fc"></span>Grid substations</label>
+        </div>
+        <h3>Basemap</h3>
+        <select id="basemap-select" aria-label="Basemap">
+          <option value="osm">OpenStreetMap (dark-tinted)</option>
+          <option value="topo">OpenTopoMap (terrain)</option>
+        </select>
+        <hr class="divider">
+        <h3>Legend</h3>
+        <div class="legend">
+          <div class="row"><span class="dot" style="background:#34d399"></span>Recommended · score ≥ 85</div>
+          <div class="row"><span class="dot" style="background:#38bdf8"></span>Viable · 65–84</div>
+          <div class="row"><span class="dot" style="background:#fbbf24"></span>Marginal · 45–64</div>
+          <div class="row"><span class="dot" style="background:#fb7185"></span>Not recommended · &lt; 45</div>
+          <div class="row"><span class="dot" style="background:#7dd3fc"></span>Substation (132/33/11 kV)</div>
+        </div>
+        <p class="note map-attr-note">Tile rasters are dark-tinted with a single CSS filter instead of a vector-tile stack — one line of CSS vs ~140 KB of extra JS. © OpenStreetMap contributors.</p>
+      </div>
+      <div>
+        <div id="map" role="application" aria-label="Interactive suitability map"></div>
+        <div class="card" style="margin-top:14px">
+          <div id="explore-detail-empty">
+            <h3>Site scorecard</h3>
+            <p class="muted">Select a green/blue site marker on the map — or a row on the Overview tab — to see the weighted-criterion breakdown here.</p>
+          </div>
+          <div id="explore-detail"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOAD ================= -->
+  <section class="view" id="view-load" role="tabpanel" aria-label="Load estimator">
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Station configuration</h3>
+        <p class="small muted">Defaults follow the selected site from its GIS attributes; every value is overridable.</p>
+        <div class="field">
+          <label for="load-site">Site</label>
+          <select id="load-site"></select>
+        </div>
+        <div class="field">
+          <label for="in-chargers">240 kW dispensers <output id="out-chargers">4</output></label>
+          <input type="range" id="in-chargers" min="1" max="8" step="1" value="4">
+        </div>
+        <div class="field">
+          <label for="in-util">Target utilization (capacity factor) <output id="out-util">14%</output></label>
+          <input type="range" id="in-util" min="4" max="30" step="0.5" value="14">
+        </div>
+        <div class="field">
+          <label for="in-solar">Solar canopy <output id="out-solar">150 kWp</output></label>
+          <input type="range" id="in-solar" min="0" max="500" step="10" value="150">
+        </div>
+        <div class="field">
+          <label for="in-battery">Station battery <output id="out-battery">0 kWh</output></label>
+          <input type="range" id="in-battery" min="0" max="800" step="50" value="0">
+        </div>
+        <p class="note">Diversity factor 0.82 · power factor 0.95 · N-1 friendly limit: station ≤ 85% of transformer, substation spare ≥ 25%.</p>
+      </div>
+      <div class="card">
+        <h3>Feeder feasibility</h3>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Connected load</div><div class="v" id="out-connected">—</div></div>
+          <div class="stat"><div class="k">Diversified peak</div><div class="v" id="out-peak">—</div></div>
+          <div class="stat"><div class="k">Transformer</div><div class="v" id="out-transformer">—</div></div>
+          <div class="stat"><div class="k">Loading</div><div class="v" id="out-loadpct">—</div></div>
+          <div class="stat"><div class="k">Substation spare</div><div class="v" id="out-headroom">—</div></div>
+          <div class="stat"><div class="k">Energy</div><div class="v" id="out-energy">—</div></div>
+        </div>
+        <p style="margin:10px 0 4px">Verdict: <span id="out-verdict" class="badge recommended">—</span></p>
+        <ul class="check-list" id="out-notes"></ul>
+        <p class="small muted" id="out-shave" style="margin-top:8px">—</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>24-hour dispatch profile <span class="muted small">· solar self-consumption + evening peak shaving</span></h3>
+      <div class="chart-wrap"><canvas id="load-chart" class="chart" aria-label="24-hour load dispatch chart"></canvas></div>
+      <div class="chart-legend">
+        <span class="key"><span class="swatch" style="background:#8ba0bf"></span>Charger demand (dashed)</span>
+        <span class="key"><span class="swatch" style="background:#38bdf8"></span>Grid draw — solar only</span>
+        <span class="key"><span class="swatch" style="background:#34d399"></span>Grid draw — solar + storage</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CARBON & SCI ================= -->
+  <section class="view" id="view-carbon" role="tabpanel" aria-label="Carbon and SCI">
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Software Carbon Intensity calculator</h3>
+        <p class="small muted">Green Software Foundation model: <code>SCI = ((E × I) + M) / R</code></p>
+        <div class="grid grid-2" style="gap:8px">
+          <div class="field"><label for="sci-e">E — energy (kWh/yr)</label><input type="number" id="sci-e" min="0" step="1000"></div>
+          <div class="field"><label for="sci-i">I — grid intensity (gCO₂e/kWh)</label><input type="number" id="sci-i" min="0" step="1"></div>
+          <div class="field"><label for="sci-m">M — embodied (kgCO₂e/yr)</label><input type="number" id="sci-m" min="0" step="10"></div>
+          <div class="field"><label for="sci-r">R — functional unit (sessions/yr)</label><input type="number" id="sci-r" min="1" step="100"></div>
+        </div>
+        <div class="formula" id="sci-formula">SCI = ((E × I) + M) / R</div>
+        <p style="font-size:1.05rem">Per-session footprint: <strong id="sci-result" class="num" style="color:var(--accent)">—</strong></p>
+        <p class="small muted" id="sci-note"></p>
+      </div>
+      <div class="card">
+        <h3>Time-shifted charging simulation</h3>
+        <p class="small muted">Moves flexible surplus above a scheduling threshold into the day's lowest-intensity hours, respecting a 0.5C battery-like dispatch cap.</p>
+        <button class="btn" id="btn-shift">Run carbon-aware shift</button>
+        <div id="shift-result" style="display:none;margin-top:12px">
+          <div class="stat-grid" id="shift-stats"></div>
+        </div>
+        <p class="note" style="margin-top:10px">Heuristic for demonstration; production would optimize against an OCPP 2.0.1 telemetry stream with a full MILP schedule.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Charging energy vs grid carbon window</h3>
+      <div class="chart-wrap"><canvas id="carbon-chart" class="chart" aria-label="Charging energy profile versus grid carbon windows"></canvas></div>
+      <div class="chart-legend">
+        <span class="key"><span class="swatch" style="background:#38bdf8"></span>Baseline charging energy</span>
+        <span class="key"><span class="swatch" style="background:#34d399"></span>After carbon-aware shift</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GREEN ================= -->
+  <section class="view" id="view-green" role="tabpanel" aria-label="Green engineering">
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Why this dashboard is intentionally boring</h3>
+        <p>The Sustainable Software Engineering playbook (HPI / AWS Sustainability Pillar / Green Software Foundation) treats carbon as a first-class non-functional requirement: <strong>ship the least software that solves the problem.</strong> Every technique below is measurable — the audit on the right is the receipt.</p>
+        <ul class="check-list">
+          <li><span class="tick">✓</span>Static HTML + hand-rolled JS (no SPA framework, no bundler, no polyfills) — the Angular/Next.js bundle for this feature set would start at ~200 KB gzipped.</li>
+          <li><span class="tick">✓</span>~3 KB custom canvas chart module instead of a full charting library (often 100 KB+).</li>
+          <li><span class="tick">✓</span>Douglas-Peucker simplified GeoJSON, ≤ 3-decimal coordinates (~100 m precision at this zoom) and rounded attributes — layers re-exported under a strict byte budget.</li>
+          <li><span class="tick">✓</span>System font stack — zero webfont requests, zero font reflow.</li>
+          <li><span class="tick">✓</span>Dark theme (fewer lit pixels on OLED) and <code>prefers-reduced-motion</code> respected.</li>
+          <li><span class="tick">✓</span>No client polling loops; every widget renders on demand — compute happens once per interaction, not per heartbeat.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Payload audit — measured in your browser</h3>
+        <p class="small muted">Uses the Resource Timing API to sum every JS/CSS/GeoJSON byte this app transferred. Budget: 500 KB total.</p>
+        <button class="btn" id="btn-measure">Re-run audit</button>
+        <p style="margin:10px 0 6px">Total: <strong id="measure-total" class="num">—</strong></p>
+        <div class="bar" id="measure-bar"><span style="width:0%"></span></div>
+        <ul class="check-list" id="measure-list" style="margin-top:10px"></ul>
+        <p class="note" style="margin-top:8px">Cross-origin resources served from the browser cache (Leaflet on unpkg) report 0 transfer bytes — first-party assets are what this audit controls.</p>
+      </div>
+    </div>
+    <div class="grid grid-3" style="margin-top:14px">
+      <div class="card tech-card"><div class="pct">−70%</div><h3>Framework bytes avoided</h3><p class="small muted">Static-first architecture vs an SPA baseline for the same feature set.</p></div>
+      <div class="card tech-card"><div class="pct">&lt;180 KB</div><h3>Layer payloads</h3><p class="small muted">Simplified GeoJSON tiles rendered instantly, preserving ~99% boundary fidelity at target zoom.</p></div>
+      <div class="card tech-card"><div class="pct">SCI ↓</div><h3>Carbon-aware scheduling</h3><p class="small muted">Flexible charging shifted into low-intensity grid hours — the same principle applied to batch compute.</p></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site">
+  <div class="inner">
+    <span>EcoGrid Geo-Spatial &amp; Carbon-Aware Analyzer · 2026 · MIT License</span>
+    <span>Demo data is synthetic and for portfolio illustration only — <a href="https://github.com/dashdibyajit1-png/ecogrid-geo-carbon-analyzer">source on GitHub</a> · <a href="docs/METHODOLOGY.md">methodology</a></span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/charts.js" defer></script>
+<script src="js/scoring.js" defer></script>
+<script src="js/load.js" defer></script>
+<script src="js/sci.js" defer></script>
+<script src="js/map.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

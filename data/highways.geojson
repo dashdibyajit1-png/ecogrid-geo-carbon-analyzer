@@ -1,0 +1,27 @@
+{
+  "name": "odisha-highway-corridors-demo",
+  "crs": "WGS84 (EPSG:4326) — Douglas-Peucker simplified from UTM Zone 45N (EPSG:32645) analysis geometry",
+  "note": "Synthetic demo alignment representative of NH16 and NH55 corridors in Odisha; simplified to stay within the green-software payload budget.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "id": "NH-16", "name": "NH-16 Golden Quadrilateral (Chennai–Kolkata)", "class": "NH", "lanes": 6, "aadt2026": 58000, "heavyVehiclePct": 32, "seasonalNote": "Harvest-season freight peak Nov–Feb" },
+      "geometry": { "type": "LineString", "coordinates": [[83.49, 18.79], [84.02, 19.31], [84.79, 19.31], [85.21, 19.75], [85.79, 20.06], [85.82, 20.25], [85.94, 20.42], [86.09, 20.65], [86.42, 20.92], [86.90, 21.30], [87.42, 21.72]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": "NH-55", "name": "NH-55 (Cuttack–Sambalpur)", "class": "NH", "lanes": 4, "aadt2026": 24000, "heavyVehiclePct": 41, "seasonalNote": "Coal-corridor trucks year-round" },
+      "geometry": { "type": "LineString", "coordinates": [[85.90, 20.48], [85.68, 20.63], [85.42, 20.78], [85.13, 20.87], [84.87, 20.98], [84.61, 21.09], [84.20, 21.18], [83.98, 21.47]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": "NH-316", "name": "NH-316 spur (Bhubaneswar–Puri)", "class": "NH", "lanes": 4, "aadt2026": 19500, "heavyVehiclePct": 12, "seasonalNote": "Pilgrimage and tourist peaks Jun–Jul & Dec–Jan" },
+      "geometry": { "type": "LineString", "coordinates": [[85.83, 20.23], [85.83, 20.05], [85.85, 19.90], [85.84, 19.81]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": "SH-KJD", "name": "SH Khandagiri–Jatni section", "class": "SH", "lanes": 2, "aadt2026": 9800, "heavyVehiclePct": 9, "seasonalNote": "Stable commuter corridor" },
+      "geometry": { "type": "LineString", "coordinates": [[85.78, 20.26], [85.73, 20.20], [85.70, 20.16], [85.66, 20.14]] }
+    }
+  ]
+}
